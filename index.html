@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ML Prediction App</title>
+</head>
+<body>
+    <h2>Enter a number (x):</h2>
+    <input id="inputX" type="number" />
+    <button onclick="predict()">Predict</button>
+
+    <h3 id="result"></h3>
+
+    <script>
+        async function predict() {
+            const x = document.getElementById("inputX").value;
+            const response = await fetch("http://localhost:8000/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ x: parseFloat(x) })
+            });
+
+            const data = await response.json();
+            document.getElementById("result").innerText = "Prediction: " + data.prediction;
+        }
+    </script>
+</body>
+</html>

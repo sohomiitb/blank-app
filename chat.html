@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat with ML Model</title>
+</head>
+<body>
+    <h2>Ask About Housing Price:</h2>
+    <input type="text" id="prompt" placeholder="Ask about housing price..." />
+    <button onclick="ask()">Send</button>
+
+    <p><strong>Bot:</strong> <span id="response"></span></p>
+
+    <script>
+        async function ask() {
+            const prompt = document.getElementById("prompt").value;
+            const res = await fetch("http://localhost:8000/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ prompt: prompt })
+            });
+
+            const data = await res.json();
+            document.getElementById("response").innerText = data.response;
+        }
+    </script>
+</body>
+</html>
